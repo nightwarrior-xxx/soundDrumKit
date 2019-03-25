@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DRUM KIT</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="background-image: linear-gradient(75deg, #3a7bd5, #3a6073  );background-attachment: fixed">
+    <div class="container">
+      <div class="row">
+        <div data-key="65" class="key col-md-2 col-sm-2">
+          <kbd>A</kbd>
+          <span class="sound">Clap</span>
+        </div>
+
+        <div data-key="83" class="key col-md-2 col-sm-2">
+          <kbd>S</kbd>
+          <span class="sound">HipHop</span>
+        </div>
+
+        <div data-key="68" class="key col-md-2 col-sm-2">
+          <kbd>D</kbd>
+          <span class="sound">Electric</span>
+        </div>
+
+        <div data-key="70" class="key col-md-2 col-sm-2 center-block">
+          <kbd>F</kbd>
+          <span class="sound">Classical</span>
+        </div>
+
+        <div data-key="71" class="key col-md-2 col-sm-2">
+          <kbd>G</kbd>
+          <span class="sound">Pop</span>
+        </div>
+
+        <div data-key="72" class="key col-md-2 col-sm-2">
+          <kbd>H</kbd>
+          <span class="sound">Pop</span>
+        </div>
+      </div>
+    </div>
+
+    <audio data-key="65" src="sounds/a.wav"></audio>
+    <audio data-key="83" src="sounds/clean_snare.wav"></audio>
+    <audio data-key="68" src="sounds/shotgun.wav"></audio>
+    <audio data-key="70" src="sounds/f.wav"></audio>
+    <audio data-key="71" src="sounds/g.wav"></audio>
+    <audio data-key="72" src="sounds/h.wav"></audio>
+
+    <script>
+      window.addEventListener("keydown", function(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        console.log(audio);
+        if (!audio) {
+          return;
+        }
+        audio.currentTime = 0;
+        audio.play();
+        // key.addClass('palying') // jQuery
+        key.classList.add("playing"); // Vanilla JS 
+      });
+
+      function removeTransition(e) {
+        if (e.propertyName != "transform") {
+          return;
+        }
+        this.classList.remove("playing");
+      }
+
+      const keys = document.querySelectorAll(".key");
+      keys.forEach(keys =>
+        keys.addEventListener("transitionend", removeTransition)
+      );
+    </script>
+
+  </body>
+</html>
